@@ -38,7 +38,7 @@ export const fetchListJobsSuccess = (payload) => {
 export const fetchListJob = (query) => {
   return async (dispatch, getState) => {
     try {
-      console.log(query, "query");
+      console.log(query, "query <><>");
       let url = `${baseUrl}/list_job?`;
       if (query) {
         if (query.description) {
@@ -50,12 +50,13 @@ export const fetchListJob = (query) => {
         if (query.full_time) {
           url += `&full_time=${query.full_time}`;
         }
+        if (query.page) {
+          url += `&page=${query.page}`;
+        } else {
+          url += `&page=1`;
+        }
       }
-      if (query) {
-        url += `&page=${query}`;
-      } else {
-        url += `&page=1`;
-      }
+      //   callback();
       let { data } = await axios.get(url, {
         headers: {
           access_token: localStorage.getItem("access_token"),

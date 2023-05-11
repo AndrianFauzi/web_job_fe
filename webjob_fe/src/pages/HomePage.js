@@ -11,6 +11,7 @@ export default function HomePage() {
     description: "",
     location: "",
     full_time: "",
+    page: "",
   });
 
   console.log(initial);
@@ -39,9 +40,10 @@ export default function HomePage() {
     console.log(e);
     e.preventDefault();
     const pages = document.getElementById(e.target.id).innerHTML;
+    setform({ page: pages });
     dispatch(
-      fetchListJob(pages, () => {
-        return <div>Loading...</div>;
+      fetchListJob(form, () => {
+        console.log("berhasil");
       })
     );
   };
