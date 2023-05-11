@@ -35,6 +35,16 @@ export default function HomePage() {
     );
   };
 
+  const handlePagination = (e) => {
+    console.log(e);
+    e.preventDefault();
+    const pages = document.getElementById(e.target.id).innerHTML;
+    dispatch(
+      fetchListJob(pages, () => {
+        return <div>Loading...</div>;
+      })
+    );
+  };
   const getDetailsJob = (e, id) => {
     e.preventDefault();
     console.log("<<<");
@@ -109,13 +119,23 @@ export default function HomePage() {
               Previous
             </a>
           </li>
-          <li class="page-item active">
-            <a class="page-link">1</a>
+          <li class="page-item">
+            <div
+              class="page-link"
+              id="page1"
+              onClick={(e) => handlePagination(e)}
+            >
+              1
+            </div>
           </li>
           <li class="page-item">
-            <a class="page-link" href="#">
-              2 <span class="sr-only">(current)</span>
-            </a>
+            <div
+              class="page-link"
+              id="page2"
+              onClick={(e) => handlePagination(e)}
+            >
+              2
+            </div>
           </li>
           <li class="page-item">
             <a class="page-link" href="#">
@@ -134,13 +154,20 @@ export default function HomePage() {
         </thead>
         <tbody>
           {initial.job.jobs.map((data) => {
-            return (
-              <tr onClick={(e) => getDetailsJob(e, data.id)} className="hover">
-                <th scope="row">{data.title}</th>
-                <td>{data.type}</td>
-                <td>{data.company}</td>
-              </tr>
-            );
+            if (data !== null) {
+              return (
+                <tr
+                  onClick={(e) => getDetailsJob(e, data.id)}
+                  className="hover"
+                >
+                  <th scope="row">{data.title}</th>
+                  <td>{data.type}</td>
+                  <td>{data.company}</td>
+                </tr>
+              );
+            } else {
+              return null;
+            }
           })}
         </tbody>
       </table>

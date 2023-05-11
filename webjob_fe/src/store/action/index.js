@@ -38,8 +38,8 @@ export const fetchListJobsSuccess = (payload) => {
 export const fetchListJob = (query) => {
   return async (dispatch, getState) => {
     try {
+      console.log(query, "query");
       let url = `${baseUrl}/list_job?`;
-      console.log(query);
       if (query) {
         if (query.description) {
           url += `description=${query.description}`;
@@ -51,13 +51,17 @@ export const fetchListJob = (query) => {
           url += `&full_time=${query.full_time}`;
         }
       }
+      if (query) {
+        url += `&page=${query}`;
+      } else {
+        url += `&page=1`;
+      }
       let { data } = await axios.get(url, {
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
       });
-      console.log("test");
-      console.log(data, "data");
+      console.log(data, "ini datanya <<");
       dispatch(fetchListJobsSuccess(data));
     } catch (error) {
       console.log(error);
